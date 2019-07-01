@@ -1,0 +1,6 @@
+<app-update-calendar-event
+  [calendarEvent]="calendarEvent$ | async"
+  [eventStatuses]="eventStatuses$ | async"
+  [attendingStatuses]="attengingStatuses$ | async"
+  (updateCalendarEventEmitter)="updateCalendarEvent($event)"
+></app-update-calendar-event>

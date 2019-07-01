@@ -1,0 +1,5 @@
+<section *ngIf="calendarEvent" (click)="onViewEventDetails(calendarEvent._id)" class="event-details">
+  <h3 class="mat-title">{{ calendarEvent.name }}</h3>
+  <h5 class="mat-subtitle">{{ calendarEvent.startTime + ' to ' + calendarEvent.endTime }}</h5>
+  <span class="mat-caption">{{ calendarEvent.description }}</span>
+</section>

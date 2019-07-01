@@ -1,0 +1,47 @@
+<mat-card *ngIf="calendarEvent">
+  <mat-card-header>
+    <mat-card-title>{{ calendarEvent.name }}</mat-card-title>
+    <mat-card-subtitle>{{ calendarEvent.description }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListIcon>today</mat-icon>
+        <h3 matLine>
+          {{ calendarEvent.eventStart + ' @ ' + calendarEvent.startTime + ' to ' + calendarEvent.eventEnd + ' @ ' + calendarEvent.endTime }}
+        </h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="calendarEvent.location">
+        <mat-icon matListIcon>pin_drop</mat-icon>
+        <h3 matLine>{{ calendarEvent.location }}</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="calendarEvent.recurring && calendarEvent.recurring === true">
+        <mat-icon matListIcon>cached</mat-icon>
+        <h3 matLine>Event is recurring</h3>
+      </mat-list-item>
+      <h3 matSubheader>{{ guests.length + ' Guests' }}</h3>
+      <mat-list-item *ngFor="let guest of guests">
+        <mat-icon matListIcon>{{ guest.attending | guestAttendingIcon }}</mat-icon>
+        <h3 matLine>{{ guest.name }}</h3>
+        <p matLine>
+          <span class="mat-caption">{{ guest.email }}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="button" mat-button [routerLink]="['/calendar-events/todays-events', currentDate]">
+      Go to Today's Events
+    </button>
+    <button type="button" mat-button [routerLink]="['/calendar-events/list']">
+      Go to Events List
+    </button>
+    <span class="fill-space"></span>
+    <button type="button" mat-icon-button color="primary" [routerLink]="['/calendar-events/update', calendarEvent._id]">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" mat-icon-button color="warn" [routerLink]="['/calendar-events/delete', calendarEvent._id]">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,137 @@
+<form novalidate [formGroup]="calendarEventFormGroup">
+  <mat-form-field class="full-width-input" appearance="outline" color="primary">
+    <mat-label>Name</mat-label>
+    <input type="text" matInput [formControl]="calendarEventFormGroup.get('name')" required />
+    <mat-hint>Enter a Name for the Event</mat-hint>
+    <mat-error *ngIf="calendarEventFormGroup.get('name').invalid && calendarEventFormGroup.get('name').touched">
+      <span>Event Name is required</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width-input" appearance="outline" color="primary">
+    <mat-label>Status</mat-label>
+    <mat-select [formControl]="calendarEventFormGroup.get('status')" required>
+      <mat-option *ngFor="let status of eventStatuses" [value]="status">{{ status }}</mat-option>
+    </mat-select>
+    <mat-hint>What is the Event status. e.g. UPCOMING</mat-hint>
+    <mat-error *ngIf="calendarEventFormGroup.get('status').invalid && calendarEventFormGroup.get('status').touched">
+      <span>Event Status is required</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width-input" appearance="outline" color="primary">
+    <mat-label>Description</mat-label>
+    <textarea matInput [formControl]="calendarEventFormGroup.get('description')"></textarea>
+    <mat-hint>Enter a description of this Event to provide better detail</mat-hint>
+  </mat-form-field>
+  <h3 class="mat-subheading-2">Event Start</h3>
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="flex-start" fxLayoutGap="20px">
+    <mat-form-field fxFlex.lt-sm="100%" class="full-width-input" appearance="outline" color="primary">
+      <mat-label>Start Date</mat-label>
+      <input
+        matInput
+        type="text"
+        [matDatepicker]="eventStartDatepicker"
+        [formControl]="calendarEventFormGroup.get('eventStart')"
+        [placeholder]="currentDate | date: 'yyyy-MM-dd'"
+        (dateChange)="setEventDateValue(calendarEventFormGroup.get('eventStart'), $event.value)"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="eventStartDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #eventStartDatepicker></mat-datepicker>
+      <mat-hint align="start">What is the Start Date of the event? Ex: {{ currentDate | date: 'yyyy-MM-dd' }}</mat-hint>
+      <mat-error *ngIf="calendarEventFormGroup.get('eventStart').invalid && calendarEventFormGroup.get('eventStart').touched">
+        <span *ngIf="calendarEventFormGroup.get('eventStart').hasError('required')">Event Start Date is required</span>
+        <span *ngIf="calendarEventFormGroup.get('eventStart').hasError('pattern')">Event Start Date must match yyyy-MM-dd format</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex.lt-sm="100%" class="full-width-input" appearance="outline" color="primary">
+      <mat-label>Start Time</mat-label>
+      <input
+        matInput
+        [ngxTimepicker]="startTimeTimepicker"
+        [formControl]="calendarEventFormGroup.get('startTime')"
+        [placeholder]="currentDate | date: 'hh:mm a'"
+        required
+      />
+      <ngx-material-timepicker #startTimeTimepicker></ngx-material-timepicker>
+      <mat-hint align="start">When does the Event start? Ex: {{ currentDate | date: 'hh:mm a' }}</mat-hint>
+      <mat-error *ngIf="calendarEventFormGroup.get('startTime').invalid && calendarEventFormGroup.get('startTime').touched">
+        <span *ngIf="calendarEventFormGroup.get('startTime').hasError('required')">Event Start Time is required</span>
+        <span *ngIf="calendarEventFormGroup.get('startTime').hasError('pattern')">
+          Event Start Time must match hh:mm am | pm format
+        </span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <h3 class="mat-subheading-2">Event End</h3>
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="flex-start" fxLayoutGap="20px">
+    <mat-form-field fxFlex.lt-sm="100%" class="full-width-input" appearance="outline" color="primary">
+      <mat-label>End Date</mat-label>
+      <input
+        matInput
+        type="text"
+        [min]="calendarEventFormGroup.get('eventStart').value || currentDate"
+        [matDatepicker]="eventEndDatepicker"
+        [formControl]="calendarEventFormGroup.get('eventEnd')"
+        [placeholder]="currentDate | date: 'yyyy-MM-dd'"
+        (dateChange)="setEventDateValue(calendarEventFormGroup.get('eventEnd'), $event.value)"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="eventEndDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #eventEndDatepicker></mat-datepicker>
+      <mat-hint align="start">What is the End Date of the event? Ex: {{ currentDate | date: 'yyyy-MM-dd' }}</mat-hint>
+      <mat-error *ngIf="calendarEventFormGroup.get('eventEnd').invalid && calendarEventFormGroup.get('eventEnd').touched">
+        <span *ngIf="calendarEventFormGroup.get('eventEnd').hasError('required')">Event End Date is required</span>
+        <span *ngIf="calendarEventFormGroup.get('eventEnd').hasError('pattern')">Event End Date must match yyyy-MM-dd format</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex.lt-sm="100%" class="full-width-input" appearance="outline" color="primary">
+      <mat-label>End Time</mat-label>
+      <input
+        matInput
+        [ngxTimepicker]="endTimeTimepicker"
+        [formControl]="calendarEventFormGroup.get('endTime')"
+        [placeholder]="currentDate | date: 'hh:mm a'"
+        required
+      />
+      <ngx-material-timepicker #endTimeTimepicker></ngx-material-timepicker>
+      <mat-hint align="start">When does the Event end? Ex: {{ currentDate | date: 'hh:mm a' }}</mat-hint>
+      <mat-error *ngIf="calendarEventFormGroup.get('endTime').invalid && calendarEventFormGroup.get('endTime').touched">
+        <span *ngIf="calendarEventFormGroup.get('endTime').hasError('required')">Event End Time is required</span>
+        <span *ngIf="calendarEventFormGroup.get('endTime').hasError('pattern')">
+          Event End Time must match hh:mm am | pm format
+        </span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field class="full-width-input" appearance="outline" color="primary">
+    <mat-label>Location</mat-label>
+    <input type="text" matInput [formControl]="calendarEventFormGroup.get('location')" />
+    <mat-hint>Where is the Event taking place?</mat-hint>
+  </mat-form-field>
+  <div class="full-width-input">
+    <mat-checkbox [formControl]="calendarEventFormGroup.get('recurring')" color="primary">Is this Event Recurring?</mat-checkbox>
+  </div>
+  <div class="guests-header">
+    <h3 class="mat-title">Event Guests</h3>
+    <span class="fill-space"></span>
+    <button mat-icon-button color="accent" (click)="onAddGuest()" matTooltip="Add Guest Entry">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div formArrayName="guests" *ngFor="let guest of guestsFormArray.controls; let i = index">
+    <div class="guest-row" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="baseline" fxLayoutGap="10px">
+      <app-guest-form
+        fxFlex="0 1 calc(95% - 10px)"
+        fxFlex.lt-sm="100%"
+        [guestFormGroup]="guest"
+        [formGroupName]="i"
+        [attendingStatuses]="attendingStatuses"
+      ></app-guest-form>
+      <div fxFlex="0 1 calc(5% - 10px)" fxFlex.lt-sm="100%">
+        <button type="button" mat-icon-button color="warn" (click)="onRemoveGuest(i)" matTooltip="Remove Guest">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

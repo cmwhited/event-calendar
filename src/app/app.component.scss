@@ -1,0 +1,28 @@
+.main-content-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #eeeeee, $alpha: 0.75);
+
+  .main-toolbar {
+    flex: 0 0 auto;
+    z-index: 999;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+
+    .main-content-area {
+      flex: 1 1 auto;
+      position: relative; /* need this to position inner content */
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 15px 30px;
+    }
+  }
+}

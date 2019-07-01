@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-content>
+    <mat-toolbar color="accent">
+      <mat-toolbar-row>
+        <h1>Events List</h1>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-nav-list>
+      <div *ngFor="let eventStart of calendarEventsMapKeys">
+        <h3 matSubheader>
+          <span>{{ eventStart }}</span>
+          <span>
+            <button mat-icon-button color="accent" [routerLink]="['/calendar-events/todays-events', eventStart]">
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+          </span>
+        </h3>
+        <mat-list-item *ngFor="let event of eventsOnStartDate(eventStart)" [routerLink]="['/calendar-events/details', event._id]">
+          <h3 matLine>{{ event.name }}</h3>
+          <p matLine>
+            <span class="mat-caption">{{ event.startTime + ' - ' + event.eventEnd }}</span>
+          </p>
+          <p matLine>
+            <span class="mat-caption">{{ event.description }}</span>
+          </p>
+        </mat-list-item>
+      </div>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>

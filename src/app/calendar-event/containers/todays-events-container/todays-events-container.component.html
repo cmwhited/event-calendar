@@ -1,0 +1,3 @@
+<div *ngIf="calendarEvents$ | async">
+  <app-todays-events [calendarEvents]="calendarEvents$ | async" [eventStart]="eventStart$ | async"></app-todays-events>
+</div>

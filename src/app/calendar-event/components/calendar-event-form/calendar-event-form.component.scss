@@ -1,0 +1,14 @@
+.guests-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba($color: #eeeeee, $alpha: 0.85);
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+.guest-row {
+  padding: 10px 0;
+  padding-left: 15px;
+  margin: 0;
+  border-left: 2px solid rgba($color: #333333, $alpha: 0.85);
+}

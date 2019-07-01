@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Create Event</mat-card-title>
+    <mat-card-subtitle>Enter the Event details. Click the "Create Event" button below</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <app-calendar-event-form
+      [calendarEventFormGroup]="calendarEventFormGroup"
+      [guestsFormArray]="guestsFormArray"
+      [eventStatuses]="eventStatuses"
+      [attendingStatuses]="attendingStatuses"
+      (addGuestEmitter)="addGuest()"
+      (removeGuestEmitter)="removeGuest($event)"
+    ></app-calendar-event-form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [disabled]="calendarEventFormGroup.invalid" (click)="onSubmit(calendarEventFormGroup.value)">
+      Create Event
+    </button>
+  </mat-card-actions>
+</mat-card>

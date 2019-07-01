@@ -1,0 +1,27 @@
+<mat-card *ngIf="calendarEventFormGroup && calendarEvent">
+  <mat-card-header>
+    <mat-card-title>Update Event {{ calendarEvent.name }}</mat-card-title>
+    <mat-card-subtitle>Enter the Event details. Click the "Update Event" button below to update</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <app-calendar-event-form
+      [calendarEventFormGroup]="calendarEventFormGroup"
+      [guestsFormArray]="guestsFormArray"
+      [eventStatuses]="eventStatuses"
+      [attendingStatuses]="attendingStatuses"
+      (addGuestEmitter)="addGuest()"
+      (removeGuestEmitter)="removeGuest($event)"
+    ></app-calendar-event-form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="calendarEventFormGroup.invalid"
+      (click)="onSubmit(calendarEventFormGroup.value)"
+    >
+      Update Event
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,5 @@
+<app-create-calendar-event
+  [eventStatuses]="eventStatuses$ | async"
+  [attendingStatuses]="attengingStatuses$ | async"
+  (createCalendarEventEmitter)="createCalendarEvent($event)"
+></app-create-calendar-event>
