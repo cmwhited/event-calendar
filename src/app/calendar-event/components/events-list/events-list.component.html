@@ -18,7 +18,7 @@
         <mat-list-item *ngFor="let event of eventsOnStartDate(eventStart)" [routerLink]="['/calendar-events/details', event._id]">
           <h3 matLine>{{ event.name }}</h3>
           <p matLine>
-            <span class="mat-caption">{{ event.startTime + ' - ' + event.eventEnd }}</span>
+            <span class="mat-caption">{{ event.startTime + ' - ' + event.eventEnd + ' @ ' + event.endTime }}</span>
           </p>
           <p matLine>
             <span class="mat-caption">{{ event.description }}</span>
