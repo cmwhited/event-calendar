@@ -4,8 +4,12 @@ import gql from 'graphql-tag';
 
 import { CalendarEvent, CreateCalendarEventMutationVariables } from '../../models/calendar-event.model';
 
+type CreateCalendarEventResponse = {
+  createEvent: CalendarEvent;
+};
+
 @Injectable()
-export class CreateCalendarEventMutation extends Mutation<CalendarEvent, CreateCalendarEventMutationVariables> {
+export class CreateCalendarEventMutation extends Mutation<CreateCalendarEventResponse, CreateCalendarEventMutationVariables> {
   document = gql`
     mutation CreateCalendarEvent($event: CalendarEventInput!) {
       createEvent(event: $event) {

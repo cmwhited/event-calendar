@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
 
 import { CalendarEvent } from '../../models';
 import { CreateCalendarEventMutation } from '../../graphql/mutations';
@@ -26,8 +25,7 @@ export class CreateCalendarEventContainerComponent {
    * @param event `CalendarEvent` the submited calendar event
    */
   createCalendarEvent(event: CalendarEvent) {
-    this.createCalendarEventMutation.mutate({ event }).subscribe(({ data }) => {
-      const created: CalendarEvent = data.createEvent;
+    this.createCalendarEventMutation.mutate({ event }).subscribe(({ created }) => {
       // CalendarEvent successfully created, route to event details page
       this.router.navigate(['/calendar-events/details', created._id]);
     });
